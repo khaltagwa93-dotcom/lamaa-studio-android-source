@@ -1,0 +1,29 @@
+# Android / Gradle outputs
+.gradle/
+**/build/
+local.properties
+*.apk
+*.aab
+*.ap_
+
+# Signing material and passwords - never commit these
+*.jks
+*.keystore
+*.pem
+key.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if any local tooling)
+node_modules/
+
+# Temporary
+*.log
+*.tmp
