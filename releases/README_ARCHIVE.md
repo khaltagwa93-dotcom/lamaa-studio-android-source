@@ -1,32 +1,42 @@
 # الأرشيف الأصلي الكامل (ZIP)
 
-ملف `lamaa-studio-android-source.zip` الأصلي (~151 KB) مرفوع هنا على شكل Base64 مقسّم إلى 3 أجزاء بسبب قيود رفع الملفات الثنائية عبر واجهة GitHub المتصلة.
+ملف `lamaa-studio-android-source.zip` الأصلي (~151 KB) **لم يُرفع كثنائي** عبر واجهة GitHub المتصلة، لأن الأدوات المتاحة لا تدعم رفع ملفات Release Assets ولا تمرير محتوى ثنائي كبير بأمان.
 
-## إعادة تجميع الـ ZIP محليًا
+## الطريقة الموصى بها (الأسرع والأضمن)
 
-### Linux / macOS / WSL
+### 1) عبر واجهة GitHub (المتصفح) — أقل من دقيقة
+1. افتح المستودع: https://github.com/khaltagwa93-dotcom/lamaa-studio-android-source
+2. اضغط **Releases** → **Draft a new release**
+3. Tag: `v1.0.0-source` (أو أي اسم)
+4. Title: `Lamaa Studio full source archive`
+5. اسحب ملف `lamaa-studio-android-source.zip` إلى منطقة المرفقات
+6. Publish release
+
+بعدها سيظهر رابط تنزيل مباشر للـ ZIP.
+
+### 2) عبر GitHub CLI (من جهازك)
 ```bash
-cat releases/lamaa-studio-android-source.zip.part0.b64 \
-    releases/lamaa-studio-android-source.zip.part1.b64 \
-    releases/lamaa-studio-android-source.zip.part2.b64 \
-  | base64 -d > lamaa-studio-android-source.zip
-
-unzip -l lamaa-studio-android-source.zip   # للتحقق
+gh release create v1.0.0-source \
+  /path/to/lamaa-studio-android-source.zip \
+  --repo khaltagwa93-dotcom/lamaa-studio-android-source \
+  --title "Lamaa Studio full source archive" \
+  --notes "الأرشيف الأصلي الكامل للمشروع"
 ```
 
-### Windows (PowerShell)
-```powershell
-$parts = 0..2 | ForEach-Object { Get-Content "releases/lamaa-studio-android-source.zip.part$_.b64" -Raw }
-$bytes = [Convert]::FromBase64String(($parts -join ""))
-[IO.File]::WriteAllBytes("lamaa-studio-android-source.zip", $bytes)
+### 3) كملف عادي في الفرع (أقل تفضيلاً)
+```bash
+git clone https://github.com/khaltagwa93-dotcom/lamaa-studio-android-source.git
+cd lamaa-studio-android-source
+cp /path/to/lamaa-studio-android-source.zip .
+git add lamaa-studio-android-source.zip
+git commit -m "Add original full source ZIP"
+git push
 ```
 
-بعد فك الضغط ستحصل على الشجرة الكاملة بما فيها:
-- `app.js` و `index.html` و `styles.css` الكاملة
-- أيقونات PNG
-- `gradlew` / `gradlew.bat`
-- workflow الكامل
-- كل ملفات الـ assets داخل Android
+## ما هو موجود حاليًا في المستودع
+- هيكل المشروع + التوثيق العربي
+- ملفات Android الأساسية و MainActivity
+- ملفات PWA وسكربتات الفحص
+- بعض ملفات الواجهة بنسخ مختصرة (بسبب حدود الرفع)
 
-## ملاحظة
-لا ترفع ملفات keystore أو كلمات المرور إلى المستودع أبدًا.
+بعد رفع الـ ZIP كـ Release ستحصل على النسخة المطابقة 100% للأصل (بما فيها الأيقونات و app.js الكامل و gradlew).
